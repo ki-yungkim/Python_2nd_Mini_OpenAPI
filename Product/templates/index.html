@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>생필품 정보 전체</h3>
+<a href="/product/goodInfoAll">목록 확인</a>
+
+<h3>생필품 아이디 검색</h3>
+<form action="/product/goodInfoOne" method="POST">
+    상품 아이디:<input type="text" name="goodId">
+    <input type="submit" value="검색">
+</form>
+
+<h3>생필품 이름으로 검색</h3>
+<form action="/product/goodInfoByName" method="POST">
+    상품 아이디:<input type="text" name="goodId">
+    <input type="submit" value="검색">
+</form>
+
+<h3>판매점 정보 전체</h3>
+<a href="/store/storeInfoAll">목록 확인</a>
+
+<h3>판매점 아이디로 검색</h3>
+<form action="/store/storeInfoOne" method="POST">
+    판매점 아이디:<input type="text" name="entpId">
+    <input type="submit" value="검색">
+</form>
+
+<h3>상품 아이디로 가격 검색</h3>
+<form action="/price/priceByGoodId" method="POST">
+    상품 아이디:<input type="text" name="goodId">
+    날짜:<input type="text" name="day">
+    <input type="submit" value="검색">
+</form>
+
+<h3>판매점 아이디로 가격 검색</h3>
+<form action="/price/priceByEntpId" method="POST">
+    판매점 아이디:<input type="text" name="entpId">
+    날짜:<input type="text" name="day">
+    <input type="submit" value="검색">
+</form>
+</body>
+</html>

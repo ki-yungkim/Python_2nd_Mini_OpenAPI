@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>판매점 전체 목록</h3>
+<table border="1">
+    <tr>
+        <th>업체 아이디</th><th>업체명</th><th>업체 업태코드</th>
+        <th>업체 지역코드</th><th>지역 상세코드</th><th>전화번호</th>
+        <th>우편번호</th><th>지번기본주소</th><th>지번상세주소</th><th>도로기본주소</th><th>도로상세주소</th>
+        <th>X좌표</th><th>Y좌표</th>
+    </tr>
+    {% for store in storeList %}
+    <tr>
+        <td>{{store.entpId}}</td>
+        <td>{{store.entpName}}</td>
+        <td>{{store.entpTypeCode}}</td>
+        <td>{{store.entpAreaCode}}</td>
+        <td>{{store.areaDetailCode}}</td>
+        <td>{{store.entpTelno}}</td>
+        <td>{{store.postNo}}</td>
+        <td>{{store.plmkAddrBasic}}</td>
+        <td>{{store.plmkAddrDetail}}</td>
+        <td>{{store.roadAddrBasic}}</td>
+        <td>{{store.roadAddrDetail}}</td>
+        <td>{{store.xMapCoord}}</td>
+        <td>{{store.yMapCoord}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
