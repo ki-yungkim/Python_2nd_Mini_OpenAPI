@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.register_blueprint(r.prod_bp)
 app.register_blueprint(r.store_bp)
 app.register_blueprint(r.price_bp)
+app.register_blueprint(r.standard_bp)
 
 @app.route('/')
 def root():
