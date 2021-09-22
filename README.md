@@ -1,14 +1,14 @@
 # Python_2nd_Mini_OpenAPI
  
-# 210922
-# 김기영
+## 210922
+## 김기영
 
  
-# 활용 API https://www.data.go.kr/data/3043385/openapi.do
+## 활용 API https://www.data.go.kr/data/3043385/openapi.do
 
-# 팀명 : 3팀 
-# 팀원 : 김기영 김현진 박민재 한다예 
-# 팀장 : 김기영 
+## 팀명 : 3팀 
+## 팀원 : 김기영 김현진 박민재 한다예 
+## 팀장 : 김기영 
 
 ## 주제 : 생필품 가격정보 
 
