@@ -7,19 +7,31 @@
 <body>
 <h3>생필품 이름으로 검색</h3>
 <table border="1">
-    <tr><th>상품 아이디</th><th>상품명</th><th>상품단위구분코드</th>
-        <th>상품단위량</th><th>상품소분류코드</th><th>상품설명</th>
-        <th>상품용량</th><th>상품용량 구분코드</th></tr>
+    <tr><th>상품 아이디</th><th>상품명</th><th>상품단위구분</th>
+        <th>상품단위량</th><th>상품소분류</th><th>상품설명</th>
+        <th>상품용량</th><th>상품용량 구분</th></tr>
     {% for goods in goodList %}
     <tr>
         <td>{{goods.goodId}}</td>
         <td>{{goods.goodName}}</td>
-        <td>{{goods.goodUnitDivCode}}</td>
+        {% for std in UTList %}
+            {% if goods.goodUnitDivCode == std.code %}
+                <td>{{std.codeName}}</td>
+            {% endif%}
+        {% endfor %}
         <td>{{goods.goodBaseCnt}}</td>
-        <td>{{goods.goodSmlclsCode}}</td>
+        {% for std in ALList %}
+            {% if goods.goodSmlclsCode == std.code %}
+                <td>{{std.codeName}}</td>
+            {% endif%}
+        {% endfor %}
         <td>{{goods.detailMean}}</td>
         <td>{{goods.goodTotalCnt}}</td>
-        <td>{{goods.goodTotalDivCode}}</td>
+        {% for std in UTList %}
+            {% if goods.goodTotalDivCode == std.code %}
+                <td>{{std.codeName}}</td>
+            {% endif%}
+        {% endfor %}
     </tr>
 
     {% endfor %}

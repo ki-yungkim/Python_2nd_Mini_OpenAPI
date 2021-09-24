@@ -14,6 +14,7 @@ class Service:
         self.base_url = 'http://openapi.price.go.kr/openApiImpl/ProductPriceInfoService/'
         self.api_key = '0T%2F98gSX5j9sCWzfQv5sF20Bt3QHxB0k5iKt4tmI2lofZZemulH7eVuvEyF%2FhonmX4t1s%2Fdk3B%2FpmJ%2FmjoK9pA%3D%3D'
 
+    # 상품 단위 코드
     def getUT(self):
         cmd = 'getStandardInfoSvc.do?classCode='
         url = self.base_url + cmd + 'UT' + '&ServiceKey=' + self.api_key
@@ -34,6 +35,7 @@ class Service:
             print('오류 발생 code', resultcode)
             print('오류 발생 메세지', resultMsg)
 
+    # 상품 소분류 코드
     def getAL(self):
         cmd = 'getStandardInfoSvc.do?classCode='
         url = self.base_url + cmd + 'AL' + '&ServiceKey=' + self.api_key
@@ -54,6 +56,7 @@ class Service:
             print('오류 발생 code', resultcode)
             print('오류 발생 메세지', resultMsg)
 
+    # 업체 코드
     def getBU(self):
         cmd = 'getStandardInfoSvc.do?classCode='
         url = self.base_url + cmd + 'BU' + '&ServiceKey=' + self.api_key
@@ -74,6 +77,7 @@ class Service:
             print('오류 발생 code', resultcode)
             print('오류 발생 메세지', resultMsg)
 
+    # 지역 코드
     def getAR(self):
         cmd = 'getStandardInfoSvc.do?classCode='
         url = self.base_url + cmd + 'AR' + '&ServiceKey=' + self.api_key

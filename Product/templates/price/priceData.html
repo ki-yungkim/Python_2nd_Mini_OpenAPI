@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>{{goodName}} 가격 평균, 최대, 최소</h3>
+<table border="1">
+    <tr>
+        <th>날짜</th><th>평균</th><th>최대</th><th>최대값 업체</th><th>최소</th><th>최소값 업체</th>
+    </tr>
+    <tr>
+        <td>{{data[0]}}</td>
+        <td>{{data[1]}}</td>
+        <td>{{data[2]}}</td>
+
+        {% for names in storeNameList %}
+            {% if names.entpId == entp_max[0] %}
+                <td>{{names.entpName}}</td>
+            {% endif%}
+        {% endfor %}
+
+        <td>{{data[3]}}</td>
+        {% for names in storeNameList %}
+            {% if entp_min[0] == names.entpId %}
+                <td>{{names.entpName}}</td>
+            {% endif%}
+        {% endfor %}
+    </tr>
+</table>
+</body>
+</html>

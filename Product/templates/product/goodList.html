@@ -5,11 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+<form name="KeywordSearch" method="GET" action="/product/goodInfoAll_Search">
+    <select id="keyword_category" name="keyword_category">
+        <option value="goodAll">전체검색</option>
+        <option value="goodId">상품 아이디</option>
+        <option value="goodName">상품명</option>
+    </select>
+    <input type="text" name="keyword_search" value="" placeholder="검색 키워드를 입력하세요."/>
+    <input type="submit" id="KeywordSearch_Submit" name="KeywordSearch_Submit" value="검색" />
+</form>
 <h3>생필품 목록</h3>
 <table border="1">
     <tr><th>상품 아이디</th><th>상품명</th><th>상품단위</th>
         <th>상품단위량</th><th>상품소분류</th><th>상품설명</th>
-        <th>상품용량</th><th>상품용량 구분코드</th></tr>
+        <th>상품용량</th><th>상품용량 구분</th></tr>
     {% for goods in goodList %}
     <tr>
         <td>{{goods.goodId}}</td>

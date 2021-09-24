@@ -32,14 +32,59 @@
 <h3>상품 아이디로 가격 검색</h3>
 <form action="/price/priceByGoodId" method="POST">
     상품 아이디:<input type="text" name="goodId">
-    날짜:<input type="text" name="day">
+    날짜:<input type="date" name="dayFromForm">
+    <input type="submit" value="검색">
+</form>
+
+<h3>상품 이름으로 가격 검색</h3>
+<form action="/price/priceByGoodName" method="POST">
+    상품 이름:<input type="text" name="goodName">
+    날짜:<input type="date" name="dayFromForm">
+    <input type="submit" value="검색">
+</form>
+
+<h3>날짜별 상품 별 평균, 최대, 최소</h3>
+<form action="/price/priceData" method="POST">
+    상품 이름:<input type="text" name="goodName">
+    날짜:<input type="date" name="dayFromForm">
+    <input type="submit" value="검색">
+</form>
+
+<h3>날짜별 상품 별 평균, 최대, 최소값 변화</h3>
+<form action="/price/priceChange" method="POST">
+    상품 이름:<input type="text" name="goodName">
+    날짜1:<input type="date" name="dayFromForm1">
+    날짜2:<input type="date" name="dayFromForm2">
+    <input type="submit" value="검색">
+</form>
+
+<h3>주별 상품 별 평균, 최대, 최소값 변화</h3>
+<form action="/price/priceChangeWeek" method="POST">
+    상품 이름:<input type="text" name="goodName">
+    날짜1:<input type="date" name="dayFromForm1">
+    날짜2:<input type="date" name="dayFromForm2">
+    <input type="submit" value="검색">
+</form>
+
+<h3>그래프</h3>
+<form action="/price/priceGraph" method="POST">
+    상품 이름:<input type="text" name="goodName">
+    날짜1:<input type="date" name="dayFromForm1">
+    날짜2:<input type="date" name="dayFromForm2">
     <input type="submit" value="검색">
 </form>
 
 <h3>판매점 아이디로 가격 검색</h3>
 <form action="/price/priceByEntpId" method="POST">
     판매점 아이디:<input type="text" name="entpId">
-    날짜:<input type="text" name="day">
+    날짜:<input type="date" name="dayFromForm">
+    <input type="submit" value="검색">
+</form>
+
+<h3>판매점 이름으로 가격 검색</h3>
+<form action="/price/priceByEntpName" method="POST">
+    판매점 이름:<input type="text" name="entpName">
+    날짜:<input type="date" name="dayFromForm">
     <input type="submit" value="검색">
 </form>
 

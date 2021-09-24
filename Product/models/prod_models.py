@@ -21,6 +21,7 @@ class Service:
         self.base_url = 'http://openapi.price.go.kr/openApiImpl/ProductPriceInfoService/getProductInfoSvc.do'
         self.api_key = '0T%2F98gSX5j9sCWzfQv5sF20Bt3QHxB0k5iKt4tmI2lofZZemulH7eVuvEyF%2FhonmX4t1s%2Fdk3B%2FpmJ%2FmjoK9pA%3D%3D'
 
+    # 상품 목록 전체
     def getProductInfoAll(self):
         url = self.base_url + '?ServiceKey=' + self.api_key
         html = requests.get(url).text
@@ -54,6 +55,7 @@ class Service:
             print('오류 발생 code', code)
             print('오류 발생 메세지', resultMsg)
 
+    # 상품 아이디로 검색
     def getProductInfoOne(self, goodId):
         cmd = '?goodId='
         url = self.base_url + cmd + goodId + '&ServiceKey=' + self.api_key
@@ -61,6 +63,7 @@ class Service:
         root = BeautifulSoup(html, 'lxml-xml')
         code = root.find('resultCode').text
         resultMsg = root.find('resultMsg').text
+        goods = []
 
         if code == '00':
             goodId = root.find('goodId').text
@@ -76,9 +79,10 @@ class Service:
             goodTotalCnt = root.find('goodTotalCnt').text
             goodTotalDivCode = root.find('goodTotalDivCode').text
 
-            return Product(goodId=goodId, goodName=goodName, goodUnitDivCode=goodUnitDivCode, goodBaseCnt=goodBaseCnt,
-                           goodSmlclsCode=goodSmlclsCode, detailMean=detailMean, goodTotalCnt=goodTotalCnt,
-                           goodTotalDivCode=goodTotalDivCode)
+            goods.append(Product(goodId=goodId, goodName=goodName, goodUnitDivCode=goodUnitDivCode,
+                                 goodBaseCnt=goodBaseCnt, goodSmlclsCode=goodSmlclsCode, detailMean=detailMean,
+                                 goodTotalCnt=goodTotalCnt, goodTotalDivCode=goodTotalDivCode))
+            return goods
 
         else:
             print('오류 발생 code', code)
@@ -120,6 +124,26 @@ class Service:
             print('오류 발생 code', code)
             print('오류 발생 메세지', resultMsg)
 
+    # 상품 아이디, 이름 가져오기
+    def getProductNameList(self):
+        url = self.base_url + '?ServiceKey=' + self.api_key
+        html = requests.get(url).text
+        root = BeautifulSoup(html, 'lxml-xml')
+        code = root.find('resultCode').text
+        resultMsg = root.find('resultMsg').text
+        goods = []
 
+        if code == '00':
+            items = root.select('item')
+            for item in items:
+                goodId = item.find('goodId').text
+                goodName = item.find('goodName').text
 
+                goods.append(Product(goodId=goodId, goodName=goodName))
+
+            return goods
+
+        else:
+            print('오류 발생 code', code)
+            print('오류 발생 메세지', resultMsg)
 

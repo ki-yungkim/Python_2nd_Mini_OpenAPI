@@ -39,7 +39,7 @@ class Service:
         if code == '00':
             items = root.find_all('iros.openapi.service.vo.entpInfoVO')
             for item in items:
-                entpId = item.find('entpId').text
+                entpId = int(item.find('entpId').text)
                 entpName = item.find('entpName').text
                 entpTypeCode = item.find('entpTypeCode').text
                 entpAreaCode = item.find('entpAreaCode').text
@@ -80,7 +80,7 @@ class Service:
                                     areaDetailCode=areaDetailCode, entpTelno=entpTelno, postNo=postNo,
                                     plmkAddrBasic=plmkAddrBasic, plmkAddrDetail=plmkAddrDetail, roadAddrBasic=roadAddrBasic,
                                     roadAddrDetail=roadAddrDetail, xMapCoord=xMapCoord, yMapCoord=yMapCoord))
-
+            stores.sort(key=lambda Store:Store.entpId)
             return stores
 
         else:
@@ -138,6 +138,29 @@ class Service:
                          areaDetailCode=areaDetailCode, entpTelno=entpTelno, postNo=postNo,
                          plmkAddrBasic=plmkAddrBasic, plmkAddrDetail=plmkAddrDetail, roadAddrBasic=roadAddrBasic,
                          roadAddrDetail=roadAddrDetail, xMapCoord=xMapCoord, yMapCoord=yMapCoord)
+
+        else:
+            print('오류 발생 code', code)
+            print('오류 발생 메세지', resultMsg)
+
+    # 판매점 아이디, 이름 가져오기
+    def getStoreNameList(self):
+        cmd = '/getStoreInfoSvc.do?ServiceKey='
+        url = self.base_url + cmd + self.api_key
+        html = requests.get(url).text
+        root = BeautifulSoup(html, 'lxml-xml')
+        code = root.find('resultCode').text
+        resultMsg = root.find('resultMsg').text
+        stores = []
+
+        if code == '00':
+            items = root.find_all('iros.openapi.service.vo.entpInfoVO')
+            for item in items:
+                entpId = item.find('entpId').text
+                entpName = item.find('entpName').text
+                stores.append(Store(entpId=entpId, entpName=entpName))
+
+            return stores
 
         else:
             print('오류 발생 code', code)
