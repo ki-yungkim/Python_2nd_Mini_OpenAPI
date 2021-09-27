@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+    <title>메인페이지</title>
+</head>
+
+<body>
+
+<nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/goodInfoAll">상품 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeInfoAll">판매점 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeNumber">지역별 판매점 수</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/">상품 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/">판매점 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/price/">가격 정보 검색</a>
+      </li>
+    </ul>
+</nav>
+<style>
+    div.image{
+    text-align:center
+    }
+</style>
+<div class="image">
+    <img src="/static/images/fork_total.png" width="900rem">
+</div>
+<!--
+<div class="rounded float-left">
+    <img src="/static/images/storeNumber.png" class="img-responsive center-block">
+</div>
+-->
+</body>
+</html>

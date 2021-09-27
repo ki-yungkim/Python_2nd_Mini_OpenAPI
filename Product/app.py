@@ -12,7 +12,7 @@ app.register_blueprint(r.standard_bp)
 
 @app.route('/')
 def root():
-    return render_template('index.html')
+    return render_template('mainPage.html')
 
 if __name__ == '__main__':
     app.run()

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>지역별 업체 수</title>
+</head>
+<style>
+    div{
+    float:left
+    }
+</style>
+<body>
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+<nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/goodInfoAll">상품 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeInfoAll">판매점 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/store/storeNumber">지역별 판매점 수</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/">상품 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/">판매점 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/price/">가격 정보 검색</a>
+      </li>
+    </ul>
+</nav>
+<br>
+<div>
+    <table border="1" class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>지역명</th>
+                <th>업체 수</th>
+            </tr>
+        </thead>
+        {% for i in range(17) %}
+            <tr><td>{{a_names[i]}}</td><td>{{a_cnt[i]}}개</td></tr>
+        {% endfor %}
+        <tr><td>전체 업체 수 </td><td>{{total_cnt}}개</td></tr>
+    </table>
+</div>
+<div>
+    <img src="/static/images/storeNumber.png">
+</div>
+</body>
+</html>

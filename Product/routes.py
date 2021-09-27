@@ -1,6 +1,7 @@
 from datetime import timedelta
 import datetime
 import matplotlib.pyplot as plt
+from matplotlib import font_manager as fm, rc
 import os
 from flask import request, render_template, Blueprint, flash
 from Product.models import prod_models as product
@@ -18,9 +19,23 @@ price_service = price.Service()
 store_service = store.Service()
 standard_service = standard.Service()
 
+# menu
+@prod_bp.route('/')
+def product():
+    return render_template('product/product.html')
+
+@store_bp.route('/')
+def store():
+    return render_template('store/store.html')
+
+@price_bp.route('/')
+def price():
+    return render_template('price/price.html')
+
+
 # product
 
-# 생필품 정보 전체
+# 상품 정보 전체
 @prod_bp.route('/goodInfoAll')
 def goodInfoAll():
     try:
@@ -32,7 +47,7 @@ def goodInfoAll():
         goodList = None
     return render_template('product/goodList.html', goodList=goodList, UTList=UTList, ALList=ALList)
 
-# 생필품 아이디로 검색
+# 상품 아이디로 검색
 @prod_bp.route('/goodInfoOne', methods=['POST'])
 def goodInfoOne():
     goodId = request.form['goodId']
@@ -41,7 +56,7 @@ def goodInfoOne():
     ALList = standard_service.getAL()
     return render_template('product/goodOne.html', goodList=goodList, UTList=UTList, ALList=ALList)
 
-# 생필품 이름으로 검색
+# 상품 이름으로 검색
 @prod_bp.route('/goodInfoByName', methods=['POST'])
 def goodInfoByName():
     goodId = request.form['goodId']
@@ -92,9 +107,27 @@ def storeInfoOne():
     ARList = standard_service.getAR()
     return render_template('store/storeOne.html', store=store, BUList=BUList, ARList=ARList)
 
+# 판매점 이름으로 검색
+@store_bp.route('/storeInfoByName', methods=['POST'])
+def storeInfoByName():
+    entpName = request.form['entpName']
+    storeList = store_service.getStoreByInfoName(entpName)
+    BUList = standard_service.getBU()
+    ARList = standard_service.getAR()
+    return render_template('store/storeName.html', storeList=storeList, BUList=BUList, ARList=ARList)
+
 # price
 
 # 상품 아이디로 가격 검색
+
+@price_bp.route('/priceSearch')
+def priceSearch():
+    return render_template('price/priceSearch.html')
+
+@price_bp.route('/priceByTerm')
+def priceByTerm():
+    return render_template('price/priceByTerm.html')
+
 @price_bp.route('/priceByGoodId', methods=['POST'])
 def priceInfoByGoodId():
     day_fromForm = request.form['dayFromForm']
@@ -118,6 +151,20 @@ def priceInfoByGoodName():
 
     goodName = request.form['goodName']
     priceList = price_service.getPriceInfoByGoodName(day, goodName)
+    prodNameList = prod_service.getProductNameList()
+    storeNameList = store_service.getStoreNameList()
+    return render_template('price/priceByGoodId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
+
+# 상품 이름으로 할인 판매점, 가격 검색
+@price_bp.route('/priceDCByGoodName', methods=['POST'])
+def priceInfoDCByGoodName():
+    day_fromForm = request.form['dayFromForm']
+    day_datetime = datetime.datetime.strptime(day_fromForm, '%Y-%m-%d')
+    format = '%Y%m%d'
+    day = datetime.datetime.strftime(day_datetime, format)
+
+    goodName = request.form['goodName']
+    priceList = price_service.getDCbyGoodName(day, goodName)
     prodNameList = prod_service.getProductNameList()
     storeNameList = store_service.getStoreNameList()
     return render_template('price/priceByGoodId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
@@ -151,10 +198,11 @@ def priceChange():
     data_1 = price_service.getPriceData_1(day_1, goodName)
     data_2 = price_service.getPriceData_1(day_2, goodName)
 
-    avg = round(((data_1[1]-data_2[1])/data_1[1] * 100), 2)
-    max = round(((data_1[2]-data_2[2])/data_1[2] * 100), 2)
-    min = round(((data_1[3]-data_2[3])/data_1[3] * 100), 2)
-    return render_template('price/priceChange.html', goodName=goodName, day_fromForm_1=day_fromForm_1, day_fromForm_2=day_fromForm_2,  avg=avg, max=max, min=min)
+    avg = round(((data_2[1]-data_1[1])/data_1[1] * 100), 2)
+    max = round(((data_2[2]-data_1[2])/data_1[2] * 100), 2)
+    min = round(((data_2[3]-data_1[3])/data_1[3] * 100), 2)
+
+    return render_template('price/priceChange.html', goodName=goodName, day_fromForm_1=day_fromForm_1, day_fromForm_2=day_fromForm_2, data_1=data_1, data_2=data_2,  avg=avg, max=max, min=min)
 
 # 날짜 2개 입력 받아서 그 사이 기간 동안 주별 상품 가격 최대 최소 평균
 @price_bp.route('/priceChangeWeek', methods=['POST'])
@@ -254,30 +302,52 @@ def priceGraph():
 
     day.insert(0, day_start)
     day.append(day_end)
-    print(os.getcwd())
-    os.chdir("static/")
 
-    plt.plot(day, priceData_avg, 'ro-')
+    for i in range(len(day)):
+        day[i] = day[i][4:]
+    font_name = fm.FontProperties(fname='C:\windows/fonts/malgun.ttf').get_name()
+    rc('font', family=font_name)
+
+    os.chdir("static/images/")
+
+    plt.plot(day, priceData_avg, 'ro-', label='평균 가격')
+    plt.title('평균 가격')
+    plt.xlabel('날짜', labelpad=10)
+    plt.ylabel('가격 [\\]', labelpad=10)
+    plt.legend()
     plt.savefig('avg.png')
     plt.close()
 
-    plt.plot(day, priceData_max, 'bo-')
+    plt.plot(day, priceData_max, 'bo-', label='최고가')
+    plt.title('최고가')
+    plt.xlabel('날짜', labelpad=10)
+    plt.ylabel('가격 [\\]', labelpad=10)
+    plt.legend()
     plt.savefig('max.png')
     plt.close()
 
-    plt.plot(day, priceData_min, 'go-')
+    plt.plot(day, priceData_min, 'go-', label='최저가')
+    plt.title('최저가')
+    plt.xlabel('날짜', labelpad=10)
+    plt.ylabel('가격 [\\]', labelpad=10)
+    plt.legend()
     plt.savefig('min.png')
     plt.close()
 
-    plt.plot(day, priceData_avg, 'ro-')
-    plt.plot(day, priceData_max, 'bo-')
-    plt.plot(day, priceData_min, 'go-')
+    plt.plot(day, priceData_avg, 'ro-', label='평균가')
+    plt.plot(day, priceData_max, 'bo-', label='최고가')
+    plt.plot(day, priceData_min, 'go-', label='최저가')
+    plt.title('최고, 평균, 최저가')
+    plt.xlabel('날짜', labelpad=10)
+    plt.ylabel('가격 [\\]', labelpad=10)
+    plt.legend()
     plt.savefig('total.png')
-    plt.close()
 
-    os.chdir("../")
+    os.chdir("../../")
 
-    return render_template('price/priceGraph.html', goodName=goodName)
+    return render_template('price/priceDataChange.html', goodName=goodName, week_diff=week_diff, day_fromForm_1=day_fromForm_1,
+                           day_fromForm_2=day_fromForm_2, day=day, day_start=day_start, day_end=day_end,
+                           priceData_avg=priceData_avg, priceData_max=priceData_max, priceData_min=priceData_min)
 
 # 판매점 아이디로 가격 검색
 @price_bp.route('/priceByEntpId', methods=['POST'])
@@ -306,6 +376,39 @@ def priceInfoByEntpName():
     prodNameList = prod_service.getProductNameList()
     storeNameList = store_service.getStoreNameList()
     return render_template('price/priceByEntpId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
+
+# 판매 지역별 업체 수
+@store_bp.route('/storeNumber')
+def storeNumber():
+    areas_names,areas_cnt,total_cnt = store_service.getStoreNumber()
+
+    font_name = fm.FontProperties(fname='C:\windows/fonts/malgun.ttf').get_name()
+    rc('font', family=font_name)
+
+    for i in range(len(areas_names)):
+        areas_names[i] = areas_names[i][:2]
+    labels = areas_names
+    data = areas_cnt
+
+    os.chdir("static/images/")
+    plt.rcParams['figure.figsize'] = (11, 11)
+    plt.rcParams['font.size'] = 11
+    plt.pie(data, labels=labels, autopct='%.1f%%', pctdistance=0.7)
+    plt.savefig('storeNumber.png')
+    plt.close()
+    os.chdir("../../")
+
+    return render_template('store/storeNumber.html', a_names = areas_names, a_cnt = areas_cnt,total_cnt=total_cnt)
+
+# 판매점 주소로 검색
+@store_bp.route('/storebyAddress', methods=['POST'])
+def storebyAddress():
+    storeAddress = request.form['storeAddress']
+    storeList = store_service.getstorebyAddress(storeAddress)
+    listLength = len(storeList)
+    BUList = standard_service.getBU()
+    ARList = standard_service.getAR()
+    return render_template('store/storebyAddress.html', storeList=storeList, listLength=listLength, BUList=BUList, ARList=ARList)
 
 
 # standard

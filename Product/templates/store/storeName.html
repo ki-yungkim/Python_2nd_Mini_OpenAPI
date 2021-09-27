@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>상품 정보</title>
+    <title>판매점 이름으로 검색</title>
 </head>
 <body>
 <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
@@ -21,54 +21,56 @@
         <a class="nav-link" href="/store/storeNumber">지역별 판매점 수</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="/product/">상품 정보 검색</a>
+        <a class="nav-link" href="/product/">상품 정보 검색</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/store/">판매점 정보 검색</a>
+        <a class="nav-link active" href="/store/">판매점 정보 검색</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/price/">가격 정보 검색</a>
       </li>
     </ul>
 </nav>
-<br>
+
 <table border="1" class="table table-hover">
     <thead class="thead-dark">
         <tr>
-            <th>상품 아이디</th>
-            <th>상품명</th>
-            <th>상품단위구분</th>
-            <th>상품단위량</th>
-            <th>상품소분류</th>
-            <th>상품설명</th>
-            <th>상품용량</th>
-            <th>상품용량 구분</th>
+            <th>업체 아이디</th><th>업체명</th><th>업체 업태</th>
+            <th>업체 지역</th><th>지역 상세</th><th>전화번호</th>
+            <th>우편번호</th><th>지번기본주소</th><th>지번상세주소</th><th>도로기본주소</th><th>도로상세주소</th>
+            <th>X좌표</th><th>Y좌표</th>
         </tr>
     </thead>
-    {% for goods in goodList %}
+    {% for store in storeList %}
     <tr>
-        <td>{{goods.goodId}}</td>
-        <td>{{goods.goodName}}</td>
-        {% for std in UTList %}
-            {% if goods.goodUnitDivCode == std.code %}
+        <td>{{store.entpId}}</td>
+        <td>{{store.entpName}}</td>
+        {% for std in BUList %}
+            {% if store.entpTypeCode == std.code %}
                 <td>{{std.codeName}}</td>
             {% endif%}
         {% endfor %}
-        <td>{{goods.goodBaseCnt}}</td>
-        {% for std in ALList %}
-            {% if goods.goodSmlclsCode == std.code %}
-                <td>{{std.codeName}}</td>
-            {% endif%}
-        {% endfor %}
-        <td>{{goods.detailMean}}</td>
-        <td>{{goods.goodTotalCnt}}</td>
-        {% for std in UTList %}
-            {% if goods.goodTotalDivCode == std.code %}
-                <td>{{std.codeName}}</td>
-            {% endif%}
-        {% endfor %}
-    </tr>
 
+        {% for std in ARList %}
+            {% if store.entpAreaCode == std.code %}
+                <td>{{std.codeName}}</td>
+            {% endif%}
+        {% endfor %}
+
+        {% for std in ARList %}
+            {% if store.areaDetailCode == std.code %}
+                <td>{{std.codeName}}</td>
+            {% endif%}
+        {% endfor %}
+        <td>{{store.entpTelno}}</td>
+        <td>{{store.postNo}}</td>
+        <td>{{store.plmkAddrBasic}}</td>
+        <td>{{store.plmkAddrDetail}}</td>
+        <td>{{store.roadAddrBasic}}</td>
+        <td>{{store.roadAddrDetail}}</td>
+        <td>{{store.xMapCoord}}</td>
+        <td>{{store.yMapCoord}}</td>
+    </tr>
     {% endfor %}
 </table>
 </body>

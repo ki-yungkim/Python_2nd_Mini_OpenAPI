@@ -5,6 +5,32 @@
     <title>Title</title>
 </head>
 <body>
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+<nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/goodInfoAll">상품 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeInfoAll">판매점 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeNumber">지역별 판매점 수</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/">상품 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/">판매점 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/price/">가격 정보 검색</a>
+      </li>
+    </ul>
+</nav>
 <h3>{{store.entpName}} 판매점 정보</h3>
 <table border="1">
     <tr>

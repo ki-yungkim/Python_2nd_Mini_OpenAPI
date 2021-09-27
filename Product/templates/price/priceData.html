@@ -2,14 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>가격 평균, 최대, 최소</title>
 </head>
 <body>
-<h3>{{goodName}} 가격 평균, 최대, 최소</h3>
-<table border="1">
-    <tr>
-        <th>날짜</th><th>평균</th><th>최대</th><th>최대값 업체</th><th>최소</th><th>최소값 업체</th>
-    </tr>
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+<nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/goodInfoAll">상품 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeInfoAll">판매점 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeNumber">지역별 판매점 수</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/">상품 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/">판매점 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/price/">가격 정보 검색</a>
+      </li>
+    </ul>
+</nav>
+<!--
+<h3>{{goodName}}</h3>
+-->
+<table border="1" class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>날짜</th><th>평균</th><th>최고가</th><th>최고가 업체</th><th>최저가</th><th>최저가 업체</th>
+        </tr>
+    </thead>
     <tr>
         <td>{{data[0]}}</td>
         <td>{{data[1]}}</td>

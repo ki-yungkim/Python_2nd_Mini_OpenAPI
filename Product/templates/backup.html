@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>생필품 아이디 검색</h3>
+<form action="/product/goodInfoOne" method="POST">
+    상품 아이디:<input type="text" name="goodId">
+    <input type="submit" value="검색">
+</form>
+
+<h3>판매점 아이디로 검색</h3>
+<form action="/store/storeInfoOne" method="POST">
+    판매점 아이디:<input type="text" name="entpId">
+    <input type="submit" value="검색">
+</form>
+
+<h3>상품 아이디로 가격 검색</h3>
+<form action="/price/priceByGoodId" method="POST">
+    상품 아이디:<input type="text" name="goodId">
+    날짜:<input type="date" name="dayFromForm">
+    <input type="submit" value="검색">
+</form>
+
+<h3>판매점 아이디로 가격 검색</h3>
+<form action="/price/priceByEntpId" method="POST">
+    판매점 아이디:<input type="text" name="entpId">
+    날짜:<input type="date" name="dayFromForm">
+    <input type="submit" value="검색">
+</form>
+
+<h3>구분코드</h3>
+<a href="/standard/getUT">상품 단위 코드 확인</a>
+<br>
+<a href="/standard/getAL">상품 소분류 코드 확인</a>
+<br>
+<a href="/standard/getBU">업체 코드 확인</a>
+<br>
+<a href="/standard/getAR">지역 코드 확인</a>
+
+</body>
+</html>

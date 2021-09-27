@@ -2,14 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>가격 평균, 최고가, 최저가 변화</title>
 </head>
+
 <body>
-<h3>{{goodName}} 가격 평균, 최고 가격, 최저 가격</h3>
-<table border="1">
-    <tr>
-        <th>시작일</th><th>종료일</th>
-    </tr>
+<link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
+<nav>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/goodInfoAll">상품 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeInfoAll">판매점 목록</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/storeNumber">지역별 판매점 수</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/product/">상품 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/store/">판매점 정보 검색</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/price/">가격 정보 검색</a>
+      </li>
+    </ul>
+</nav>
+<!--
+<h3>{{goodName}}</h3>
+-->
+<table border="1" class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>시작일</th><th>종료일</th>
+        </tr>
+    </thead>
 
     <tr>
         <td>{{day_fromForm_1}}</td>
@@ -17,33 +48,34 @@
     </tr>
 </table>
 <br>
-<table border="1">
-    <tr>
-        <th>날짜</th><th>평균 가격 변동</th><th>최고값  변동</th><th>최저값 변동</th>
-    </tr>
-    <tr>
-        <td>{{day_start}}</td>
-        <td>{{priceData_avg[0]}}</td>
-        <td>{{priceData_max[0]}}</td>
-        <td>{{priceData_min[0]}}</td>
-    </tr>
-    {% for i in range(week_diff-1) %}
+<table border="1" class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>날짜</th><th>평균 가격 변동</th><th>최고값  변동</th><th>최저값 변동</th>
+        </tr>
+    </thead>
+    {% for i in range(week_diff+1) %}
 
     <tr>
         <td>{{day[i]}}</td>
-        <td>{{priceData_avg[i+2]}}</td>
-        <td>{{priceData_max[i+2]}}</td>
-        <td>{{priceData_min[i+2]}}</td>
+        <td>{{priceData_avg[i]}}</td>
+        <td>{{priceData_max[i]}}</td>
+        <td>{{priceData_min[i]}}</td>
 
     </tr>
     {% endfor %}
-
-    <tr>
-        <td>{{day_end}}</td>
-        <td>{{priceData_avg[1]}}</td>
-        <td>{{priceData_max[1]}}</td>
-        <td>{{priceData_min[1]}}</td>
-    </tr>
 </table>
+<div class="rounded float-left">
+    <img src="/static/images/avg.png">
+</div>
+<div class="rounded float-left">
+    <img src="/static/images/max.png">
+</div>
+<div class="rounded float-left">
+    <img src="/static/images/min.png">
+</div>
+<div class="rounded float-left">
+    <img src="/static/images/total.png">
+</div>
 </body>
 </html>

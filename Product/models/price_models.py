@@ -24,7 +24,7 @@ class Price:
 class Service:
     def __init__(self):
         self.base_url = 'http://openapi.price.go.kr/openApiImpl/ProductPriceInfoService'
-        self.api_key = '0T%2F98gSX5j9sCWzfQv5sF20Bt3QHxB0k5iKt4tmI2lofZZemulH7eVuvEyF%2FhonmX4t1s%2Fdk3B%2FpmJ%2FmjoK9pA%3D%3D'
+        self.api_key = ''
 
     # 상품 아이디로 가격 검색
     def getPriceInfoByGoodId(self, day, goodId):
@@ -117,6 +117,60 @@ class Service:
                 prices.append(Price(goodInspectDay=goodInspectDay, entpId=entpId, goodId=goodId, goodPrice=goodPrice,
                                     plusoneYn=plusoneYn, goodDcYn=goodDcYn, goodDcStartDay=goodDcStartDay,
                                     goodDcEndDay=goodDcEndDay, inputDttm=inputDttm))
+            return prices
+
+        else:
+            print('오류 발생 code', code)
+            print('오류 발생 메세지', resultMsg)
+
+    # 상품 이름으로 할인 판매점, 가격 검색
+    def getDCbyGoodName(self, day, goodName):
+        goods = prod_service.getProductNameList()
+        for good in goods:
+            if good.goodName == goodName:
+                goodId = good.goodId
+
+        cmd = '/getProductPriceInfoSvc.do?goodInspectDay='
+        url = self.base_url + cmd + day + '&goodId=' + goodId + '&ServiceKey=' + self.api_key
+        html = requests.get(url).text
+        root = BeautifulSoup(html, 'lxml-xml')
+        code = root.find('resultCode').text
+        resultMsg = root.find('resultMsg').text
+
+        prices = []
+        if code == '00':
+            items = root.find_all('iros.openapi.service.vo.goodPriceVO')
+            for item in items:
+                if item.find('goodDcYn').text == 'Y':
+                    print(item.find('goodDcYn').text)
+                    goodInspectDay = item.find('goodInspectDay').text
+                    entpId = item.find('entpId').text
+                    goodId = item.find('goodId').text
+                    goodPrice = item.find('goodPrice').text
+                    if item.find('plusoneYn'):
+                        plusoneYn = item.find('plusoneYn').text
+                    else:
+                        plusoneYn = None
+                    if item.find('goodDcYn'):
+                        goodDcYn = item.find('goodDcYn').text
+                    else:
+                        goodDcYn = None
+                    if item.find('goodDcStartDay'):
+                        goodDcStartDay = item.find('goodDcStartDay').text
+                    else:
+                        goodDcStartDay = None
+
+                    if item.find('goodDcEndDay'):
+                        goodDcEndDay = item.find('goodDcEndDay').text
+                    else:
+                        goodDcEndDay = None
+
+                    inputDttm = item.find('inputDttm').text
+
+                    prices.append(
+                        Price(goodInspectDay=goodInspectDay, entpId=entpId, goodId=goodId, goodPrice=goodPrice,
+                              plusoneYn=plusoneYn, goodDcYn=goodDcYn, goodDcStartDay=goodDcStartDay,
+                              goodDcEndDay=goodDcEndDay, inputDttm=inputDttm))
             return prices
 
         else:
