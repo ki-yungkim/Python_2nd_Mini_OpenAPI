@@ -116,6 +116,39 @@ def storeInfoByName():
     ARList = standard_service.getAR()
     return render_template('store/storeName.html', storeList=storeList, BUList=BUList, ARList=ARList)
 
+# 판매 지역별 업체 수
+@store_bp.route('/storeNumber')
+def storeNumber():
+    areas_names,areas_cnt,total_cnt = store_service.getStoreNumber()
+
+    font_name = fm.FontProperties(fname='C:\windows/fonts/malgun.ttf').get_name()
+    rc('font', family=font_name)
+
+    for i in range(len(areas_names)):
+        areas_names[i] = areas_names[i][:2]
+    labels = areas_names
+    data = areas_cnt
+
+    os.chdir("static/images/")
+    plt.rcParams['figure.figsize'] = (10, 10)
+    plt.rcParams['font.size'] = 10
+    plt.pie(data, labels=labels, autopct='%.1f%%', pctdistance=0.8)
+    plt.savefig('storeNumber.png')
+    plt.close()
+    os.chdir("../../")
+
+    return render_template('store/storeNumber.html', a_names = areas_names, a_cnt = areas_cnt,total_cnt=total_cnt)
+
+# 판매점 주소로 검색
+@store_bp.route('/storebyAddress', methods=['POST'])
+def storebyAddress():
+    storeAddress = request.form['storeAddress']
+    storeList = store_service.getstorebyAddress(storeAddress)
+    listLength = len(storeList)
+    BUList = standard_service.getBU()
+    ARList = standard_service.getAR()
+    return render_template('store/storebyAddress.html', storeList=storeList, listLength=listLength, BUList=BUList, ARList=ARList)
+
 # price
 
 # 상품 아이디로 가격 검색
@@ -376,39 +409,6 @@ def priceInfoByEntpName():
     prodNameList = prod_service.getProductNameList()
     storeNameList = store_service.getStoreNameList()
     return render_template('price/priceByEntpId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
-
-# 판매 지역별 업체 수
-@store_bp.route('/storeNumber')
-def storeNumber():
-    areas_names,areas_cnt,total_cnt = store_service.getStoreNumber()
-
-    font_name = fm.FontProperties(fname='C:\windows/fonts/malgun.ttf').get_name()
-    rc('font', family=font_name)
-
-    for i in range(len(areas_names)):
-        areas_names[i] = areas_names[i][:2]
-    labels = areas_names
-    data = areas_cnt
-
-    os.chdir("static/images/")
-    plt.rcParams['figure.figsize'] = (11, 11)
-    plt.rcParams['font.size'] = 11
-    plt.pie(data, labels=labels, autopct='%.1f%%', pctdistance=0.7)
-    plt.savefig('storeNumber.png')
-    plt.close()
-    os.chdir("../../")
-
-    return render_template('store/storeNumber.html', a_names = areas_names, a_cnt = areas_cnt,total_cnt=total_cnt)
-
-# 판매점 주소로 검색
-@store_bp.route('/storebyAddress', methods=['POST'])
-def storebyAddress():
-    storeAddress = request.form['storeAddress']
-    storeList = store_service.getstorebyAddress(storeAddress)
-    listLength = len(storeList)
-    BUList = standard_service.getBU()
-    ARList = standard_service.getAR()
-    return render_template('store/storebyAddress.html', storeList=storeList, listLength=listLength, BUList=BUList, ARList=ARList)
 
 
 # standard

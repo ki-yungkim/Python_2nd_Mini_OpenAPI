@@ -7,8 +7,8 @@
 <body>
 <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 <nav>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
+    <ul class="nav nav-tabs" style="width:100%;">
+      <li class="nav-item" style="margin-left: 3%; margin-right:50%;">
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
@@ -32,9 +32,9 @@
     </ul>
 </nav>
 <br>
-<table border="1" class="table table-hover">
+<table border="1" class="table table-hover" style="width:95%;margin-left:auto;margin-right:auto;">
     <thead class="thead-dark">
-        <tr>
+        <tr class="text-center">
             <th>업체 아이디</th>
             <th>업체명</th>
             <th>업체 업태</th>
@@ -42,17 +42,15 @@
             <th>지역 상세</th>
             <th>전화번호</th>
             <th>우편번호</th>
-            <th>지번기본주소</th>
+            <th>지번주소</th>
+            <!--
             <th>지번상세주소</th>
-            <th>도로기본주소</th>
-            <th>도로상세주소</th>
-            <th>X좌표</th>
-            <th>Y좌표</th>
+            -->
         </tr>
     </thead>
     {% for store in storeList %}
     <tr>
-        <td>{{store.entpId}}</td>
+        <td class="text-center">{{store.entpId}}</td>
         <td>{{store.entpName}}</td>
         {% for std in BUList %}
             {% if store.entpTypeCode == std.code %}
@@ -73,12 +71,10 @@
         {% endfor %}
         <td>{{store.entpTelno}}</td>
         <td>{{store.postNo}}</td>
-        <td>{{store.plmkAddrBasic}}</td>
+        <td>{{store.plmkAddrBasic}} {{store.plmkAddrDetail}}</td>
+        <!--
         <td>{{store.plmkAddrDetail}}</td>
-        <td>{{store.roadAddrBasic}}</td>
-        <td>{{store.roadAddrDetail}}</td>
-        <td>{{store.xMapCoord}}</td>
-        <td>{{store.yMapCoord}}</td>
+        -->
     </tr>
     {% endfor %}
 </table>

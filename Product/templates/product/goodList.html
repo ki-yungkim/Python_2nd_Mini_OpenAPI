@@ -7,8 +7,8 @@
 </head>
 <body>
 <nav>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
+    <ul class="nav nav-tabs" style="width:100%;">
+      <li class="nav-item" style="margin-left: 3%; margin-right:50%;">
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
@@ -33,7 +33,7 @@
 </nav>
 <br>
 <form name="KeywordSearch" method="GET" action="/product/goodInfoAll_Search">
-    <div class="form-row">
+    <div class="form-row" style="margin-left:10%">
         <div class="col-1">
             <select id="keyword_category" name="keyword_category" class="custom-select mr-sm-2">
                 <option value="goodAll">전체검색</option>
@@ -50,9 +50,9 @@
     </div>
 </form>
 
-<table border="1" class="table table-hover">
+<table border="1" class="table table-hover" style="width:80%;margin-left:auto;margin-right:auto;">
     <thead class="thead-dark">
-        <tr>
+        <tr class="text-center">
             <th>상품 아이디</th>
             <th>상품명</th>
             <th>상품단위</th>
@@ -66,7 +66,7 @@
 
     {% for goods in goodList %}
     <tr>
-        <td>{{goods.goodId}}</td>
+        <td class="text-center">{{goods.goodId}}</td>
         <td>{{goods.goodName}}</td>
         {% for std in UTList %}
             {% if goods.goodUnitDivCode == std.code %}

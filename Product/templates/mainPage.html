@@ -7,10 +7,12 @@
 </head>
 
 <body>
-
+<!--
+{% include 'nav.html' %}
+-->
 <nav>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
+    <ul class="nav nav-tabs" style="width:100%;">
+      <li class="nav-item" style="margin-left: 3%; margin-right:50%;">
         <a class="nav-link active" href="/">Home</a>
       </li>
       <li class="nav-item">
@@ -33,18 +35,45 @@
       </li>
     </ul>
 </nav>
+
+<br>
+<div>
+    <div>
+
+    </div>
+</div>
+
 <style>
     div.image{
-    text-align:center
+    text-align:center;
     }
+
 </style>
+
 <div class="image">
-    <img src="/static/images/fork_total.png" width="900rem">
+    <img src="/static/images/logo.png" width="500rem">
 </div>
-<!--
-<div class="rounded float-left">
-    <img src="/static/images/storeNumber.png" class="img-responsive center-block">
-</div>
--->
+<br>
+
+<form action="/price/priceByGoodName" method="POST">
+    <div class="form-row">
+        <div class="col-4">
+
+        </div>
+        <div class="col-2">
+            <input type="text" class="form-control" name="goodName" placeholder="상품 이름">
+        </div>
+        <div class="col-2">
+            <input type="date" class="form-control" name="dayFromForm">
+        </div>
+        <div class="col-1">
+            <input type="submit" class="btn btn-primary mb-2" value="검색">
+        </div>
+    </div>
+</form>
+
+
+
+
 </body>
 </html>

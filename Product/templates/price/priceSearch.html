@@ -7,8 +7,8 @@
 <body>
 <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 <nav>
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
+    <ul class="nav nav-tabs" style="width:100%;">
+      <li class="nav-item" style="margin-left: 3%; margin-right:50%;">
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
@@ -32,9 +32,15 @@
     </ul>
 </nav>
 <br>
-<form action="/price/priceByGoodName" method="POST">
+
+<div style="text-align:center;">
     <label>상품 이름으로 가격 검색</label>
+</div>
+<form action="/price/priceByGoodName" method="POST">
     <div class="form-row">
+        <div class="col-4">
+
+        </div>
         <div class="col-2">
             <input type="text" class="form-control" name="goodName" placeholder="상품 이름">
         </div>
@@ -49,9 +55,14 @@
 <br>
 <br>
 
-<form action="/price/priceDCByGoodName" method="POST">
+<div style="text-align:center;">
     <label>상품 이름으로 할인 판매점 검색</label>
+</div>
+<form action="/price/priceDCByGoodName" method="POST">
     <div class="form-row">
+        <div class="col-4">
+
+        </div>
         <div class="col-2">
             <input type="text" class="form-control" name="goodName" placeholder="상품 이름">
         </div>
@@ -66,9 +77,14 @@
 <br>
 <br>
 
-<form action="/price/priceByEntpName" method="POST">
+<div style="text-align:center;">
     <label>판매점 이름으로 가격 검색</label>
+</div>
+<form action="/price/priceByEntpName" method="POST">
     <div class="form-row">
+        <div class="col-4">
+
+        </div>
         <div class="col-2">
             <input type="text" class="form-control" name="entpName" placeholder="판매점 이름">
         </div>
@@ -83,10 +99,14 @@
 <br>
 <br>
 
-
-<form action="/price/priceData" method="POST">
+<div style="text-align:center;">
     <label>상품 별 평균, 최고, 최저가 검색</label>
+</div>
+<form action="/price/priceData" method="POST">
     <div class="form-row">
+        <div class="col-4">
+
+        </div>
         <div class="col-2">
             <input type="text" class="form-control" name="goodName" placeholder="판매점 이름">
         </div>
