@@ -124,15 +124,14 @@ def storeNumber():
     font_name = fm.FontProperties(fname='C:\windows/fonts/malgun.ttf').get_name()
     rc('font', family=font_name)
 
-    for i in range(len(areas_names)):
-        areas_names[i] = areas_names[i][:2]
-    labels = areas_names
+    labels = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '세종', '경기',
+              '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주']
     data = areas_cnt
 
     os.chdir("static/images/")
     plt.rcParams['figure.figsize'] = (10, 10)
     plt.rcParams['font.size'] = 10
-    plt.pie(data, labels=labels, autopct='%.1f%%', pctdistance=0.8)
+    plt.pie(data, labels=labels, autopct='%.1f%%', pctdistance=0.8, counterclock=False, startangle=90)
     plt.savefig('storeNumber.png')
     plt.close()
     os.chdir("../../")
@@ -178,28 +177,38 @@ def priceInfoByGoodId():
 @price_bp.route('/priceByGoodName', methods=['POST'])
 def priceInfoByGoodName():
     day_fromForm = request.form['dayFromForm']
+    goodName = request.form['goodName']
+    prodNameList = prod_service.getProductNameList()
+    storeNameList = store_service.getStoreNameList()
+
+    if day_fromForm == '':
+        priceList = []
+        return render_template('price/priceByGoodId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
+
     day_datetime = datetime.datetime.strptime(day_fromForm, '%Y-%m-%d')
     format = '%Y%m%d'
     day = datetime.datetime.strftime(day_datetime, format)
-
-    goodName = request.form['goodName']
     priceList = price_service.getPriceInfoByGoodName(day, goodName)
-    prodNameList = prod_service.getProductNameList()
-    storeNameList = store_service.getStoreNameList()
+
     return render_template('price/priceByGoodId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
 
 # 상품 이름으로 할인 판매점, 가격 검색
 @price_bp.route('/priceDCByGoodName', methods=['POST'])
 def priceInfoDCByGoodName():
     day_fromForm = request.form['dayFromForm']
+    goodName = request.form['goodName']
+    prodNameList = prod_service.getProductNameList()
+    storeNameList = store_service.getStoreNameList()
+
+    if day_fromForm == '':
+        priceList = []
+        return render_template('price/priceByGoodId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
+
     day_datetime = datetime.datetime.strptime(day_fromForm, '%Y-%m-%d')
     format = '%Y%m%d'
     day = datetime.datetime.strftime(day_datetime, format)
-
-    goodName = request.form['goodName']
     priceList = price_service.getDCbyGoodName(day, goodName)
-    prodNameList = prod_service.getProductNameList()
-    storeNameList = store_service.getStoreNameList()
+
     return render_template('price/priceByGoodId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
 
 # 날짜별 상품 가격 최대 최소 평균
@@ -400,14 +409,21 @@ def priceInfoByEntpId():
 @price_bp.route('/priceByEntpName', methods=['POST'])
 def priceInfoByEntpName():
     day_fromForm = request.form['dayFromForm']
+
+
+    entpName = request.form['entpName']
+    prodNameList = prod_service.getProductNameList()
+    storeNameList = store_service.getStoreNameList()
+
+    if day_fromForm == '':
+        priceList = []
+        return render_template('price/priceByEntpId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
+
     day_datetime = datetime.datetime.strptime(day_fromForm, '%Y-%m-%d')
     format = '%Y%m%d'
     day = datetime.datetime.strftime(day_datetime, format)
-
-    entpName = request.form['entpName']
     priceList = price_service.getPriceInfoByEntpName(day, entpName)
-    prodNameList = prod_service.getProductNameList()
-    storeNameList = store_service.getStoreNameList()
+
     return render_template('price/priceByEntpId.html', priceList=priceList, prodNameList=prodNameList, storeNameList=storeNameList)
 
 

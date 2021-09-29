@@ -75,9 +75,14 @@ class Service:
     # 상품 이름으로 가격 검색
     def getPriceInfoByGoodName(self, day, goodName):
         goods = prod_service.getProductNameList()
+        prices = []
+        goodId = ''
         for good in goods:
             if good.goodName == goodName:
                 goodId = good.goodId
+
+        if goodId == '':
+            return prices
 
         cmd = '/getProductPriceInfoSvc.do?goodInspectDay='
         url = self.base_url + cmd + day + '&goodId=' + goodId + '&ServiceKey=' + self.api_key
@@ -86,7 +91,6 @@ class Service:
         code = root.find('resultCode').text
         resultMsg = root.find('resultMsg').text
 
-        prices = []
         if code == '00':
             items = root.find_all('iros.openapi.service.vo.goodPriceVO')
             for item in items:
@@ -126,9 +130,14 @@ class Service:
     # 상품 이름으로 할인 판매점, 가격 검색
     def getDCbyGoodName(self, day, goodName):
         goods = prod_service.getProductNameList()
+        prices = []
+        goodId = ''
         for good in goods:
             if good.goodName == goodName:
                 goodId = good.goodId
+
+        if goodId == '':
+            return prices
 
         cmd = '/getProductPriceInfoSvc.do?goodInspectDay='
         url = self.base_url + cmd + day + '&goodId=' + goodId + '&ServiceKey=' + self.api_key
@@ -137,7 +146,6 @@ class Service:
         code = root.find('resultCode').text
         resultMsg = root.find('resultMsg').text
 
-        prices = []
         if code == '00':
             items = root.find_all('iros.openapi.service.vo.goodPriceVO')
             for item in items:
@@ -307,18 +315,19 @@ class Service:
     # 판매점 이름로 가격 검색
     def getPriceInfoByEntpName(self, day, entpName):
         stores = store_service.getStoreNameList()
+        prices = []
+        entpId = ''
         for store in stores:
             if store.entpName == entpName:
                 entpId = store.entpId
-
+        if entpId == '':
+            return prices
         cmd = '/getProductPriceInfoSvc.do?goodInspectDay='
         url = self.base_url + cmd + day + '&entpId=' + entpId + '&ServiceKey=' + self.api_key
         html = requests.get(url).text
         root = BeautifulSoup(html, 'lxml-xml')
         code = root.find('resultCode').text
         resultMsg = root.find('resultMsg').text
-
-        prices = []
 
         if code == '00':
             items = root.find_all('iros.openapi.service.vo.goodPriceVO')
