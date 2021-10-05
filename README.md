@@ -110,6 +110,7 @@
 # 4일차 진행 예정 내용 
 - 페이지 레이아웃 구성 
 - 디자인 
+
 ### 210928
 # 4일차 진행
 ## 오전 
@@ -128,6 +129,7 @@
 - 한다예 : 발표 자료 작성
 - 박민재 : 클래스, 액터 다이어그램 작성
 - 김현진 : 디자인 점검 및 수정 
+
 ### 210929
 # 5일차 진행
 ## 오전  
@@ -150,6 +152,14 @@
 
 # 시연용 데이터 정리 
 
+
+### 210929 
+- 프로젝트 완성
+
+### 210930 
+- 프로젝트 발표
+
+
 # 참고문헌 
 https://matplotlib.org/stable/index.html
 https://ehclub.net/677
@@ -157,9 +167,3 @@ https://zephyrus1111.tistory.com/36
 https://truman.tistory.com/103
 https://wikidocs.net/141547
 https://www.price.go.kr/tprice/portal/main/main.do
-
-### 210929 
-- 프로젝트 완성
-
-### 210930 
-- 프로젝트 발표
